@@ -24,7 +24,7 @@ namespace TechJobsPersistent.Controllers
             List<Employer> employers = context.Employers.ToList();
             return View(employers);
         }
-
+        /*[HttpGet("/Employer/Add")]*/
         public IActionResult Add()
         {
             AddEmployerViewModel addEmployerViewModel = new AddEmployerViewModel();

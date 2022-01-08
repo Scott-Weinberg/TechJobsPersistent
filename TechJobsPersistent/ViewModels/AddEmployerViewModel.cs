@@ -8,7 +8,7 @@ namespace TechJobsPersistent.ViewModels
             [Required(ErrorMessage = "Name is required")]
             public string Name { get; set; }
 
-            [Required(ErrorMessage = "Skill is required")]
+            [Required(ErrorMessage = "Location is required")]
             public string Location { get; set; }
 
         public AddEmployerViewModel(string  name, string location)
