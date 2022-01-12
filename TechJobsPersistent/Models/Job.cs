@@ -1,16 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TechJobsPersistent.Models
 {
     public class Job
     {
+        
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public Employer Employer { get; set; }
+       /* public SelectListItem AllEmployers { get; set; }
 
+        public int AllEmployersID { get; set; }*/
+
+        public Employer Employer { get; set; }
         public int EmployerId { get; set; }
 
         public List<JobSkill> JobSkills { get; set; }
@@ -23,5 +29,7 @@ namespace TechJobsPersistent.Models
         {
             Name = name;
         }
+     
+
     }
 }

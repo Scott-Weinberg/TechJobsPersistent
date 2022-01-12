@@ -21,7 +21,7 @@ namespace TechJobsPersistent.Controllers
         {
             context = dbContext;
         }
-
+        
         public IActionResult Index()
         {
             List<Job> jobs = context.Jobs.Include(j => j.Employer).ToList();
@@ -29,13 +29,36 @@ namespace TechJobsPersistent.Controllers
             return View(jobs);
         }
 
-        [HttpGet("/Add")]
-        public IActionResult AddJob()
+       /* public IActionResult Add()
         {
+            List<SelectListItem> allEmployers = context.Employers.ToList();
             AddJobViewModel addJobViewModel = new AddJobViewModel();
+            return View(addJobViewModel);
+        }*/
+
+        [HttpGet("/Add")]
+        public IActionResult AddJob(AddJobViewModel addJobViewModel)
+        {
+            
+            Job newJob = new Job
+            {
+                EmployerId = addJobViewModel.EmployerId,
+                Name = addJobViewModel.JobName,
+
+            };
+            
             return View(addJobViewModel);
 
         }
+      /*  List<SelectListItem> AddAllEmployers(Employer employer, JobName)
+        {
+            List<SelectListItem> allEmployers = context.Employers.ToList();
+
+         *//*   Employer.Name = employer.Name;
+            Employer.Location = employer.Location;*//*
+
+
+        }*/
 
         public IActionResult ProcessAddJobForm(AddJobViewModel addJobViewModel)
         {
@@ -50,33 +73,16 @@ namespace TechJobsPersistent.Controllers
                 };
                 context.Jobs.Add(newJob);
                 context.SaveChanges();
-                return Redirect("/Employer");
+                return Redirect("/Employer/");
             }
             return View(addJobViewModel);
 
         }
-    }
-}
 
-       /* From other page
-        * 
-        * public IActionResult ProcessAddEmployerForm()
-        {
-            if (ModelState.IsValid)
-            {
-                Employer newEmployer = new Employer
-                {
-                    Name = addEmployerViewModel.Name,
-                    Location = addEmployerViewModel.Location
-                };
-                context.Employers.Add(newEmployer);
-                context.SaveChanges();
-                return Redirect("/Employer");
-            }
-            return View(addEmployerViewModel);
-        }*/
 
-    /*    public IActionResult Detail(int id)
+
+
+        public IActionResult Detail(int id)
         {
             Job theJob = context.Jobs
                 .Include(j => j.Employer)
@@ -91,4 +97,4 @@ namespace TechJobsPersistent.Controllers
             return View(viewModel);
         }
     }
-}*/
+}

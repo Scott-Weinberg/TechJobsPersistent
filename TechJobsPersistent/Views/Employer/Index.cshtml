@@ -13,7 +13,9 @@ else
             @foreach (Employer employer in Model)
             {
                 <li>
-                    <a asp-controller="Employer" asp-action="About" asp-route-id="@employer.Id">@employer.Name</a>
+                    <a asp-controller="Employer" asp-action="About" asp-route-id="@employer.Name">@employer.Name</a>
+                </li>
+                <li><p>@employer.Location</p> 
                 </li>
             }
         </ul>

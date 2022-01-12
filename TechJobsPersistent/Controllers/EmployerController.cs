@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TechJobsPersistent.Data;
 using TechJobsPersistent.Models;
 using TechJobsPersistent.ViewModels;
@@ -18,6 +19,11 @@ namespace TechJobsPersistent.Controllers
         {
             context = dbContext;
         }
+        /*   private EmployerDbContext context;
+           public EmployerController(EmployerDbContext dbContext)
+           {
+               context = dbContext;
+           }*/
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -27,10 +33,11 @@ namespace TechJobsPersistent.Controllers
         /*[HttpGet("/Employer/Add")]*/
         public IActionResult Add()
         {
+            List<Employer> employers = context.Employers.ToList();
             AddEmployerViewModel addEmployerViewModel = new AddEmployerViewModel();
             return View(addEmployerViewModel);
         }
-
+        [HttpPost]
         public IActionResult ProcessAddEmployerForm(AddEmployerViewModel addEmployerViewModel)
         {
             if( ModelState.IsValid)
@@ -42,14 +49,21 @@ namespace TechJobsPersistent.Controllers
                 };
                 context.Employers.Add(newEmployer);
                 context.SaveChanges();
-                return Redirect("/Employer");
+                return Redirect("/Employer/index");
             }
-            return View(addEmployerViewModel);
+           return View("/Employer/Add");
         }
-
-        public IActionResult About(int id)
+        [HttpGet]
+        public IActionResult About()
         {
-            return View("/Employer");
+            List<Employer> employers = context.Employers.ToList();
+            return View(employers);
+
+
+
+            /*'TechJobsPersistent.ViewModels.AddEmployerViewModel'*/
+           
+            
         }
     }
 }
