@@ -28,44 +28,27 @@ namespace TechJobsPersistent.Controllers
 
             return View(jobs);
         }
-
-       /* public IActionResult Add()
-        {
-            List<SelectListItem> allEmployers = context.Employers.ToList();
-            AddJobViewModel addJobViewModel = new AddJobViewModel();
-            return View(addJobViewModel);
-        }*/
+       
+     
 
         [HttpGet("/Add")]
-        public IActionResult AddJob(AddJobViewModel addJobViewModel)
+        public IActionResult AddJob()
         {
-            
-            Job newJob = new Job
-            {
-                EmployerId = addJobViewModel.EmployerId,
-                Name = addJobViewModel.JobName,
-
-            };
-            
+             List<Employer> employers = context.Employers.ToList();
+            AddJobViewModel addJobViewModel = new AddJobViewModel(employers);
+                     
             return View(addJobViewModel);
 
         }
-      /*  List<SelectListItem> AddAllEmployers(Employer employer, JobName)
-        {
-            List<SelectListItem> allEmployers = context.Employers.ToList();
-
-         *//*   Employer.Name = employer.Name;
-            Employer.Location = employer.Location;*//*
-
-
-        }*/
-
+     
+        [HttpPost]
         public IActionResult ProcessAddJobForm(AddJobViewModel addJobViewModel)
         {
            
             if (ModelState.IsValid)
             {
-                Job newJob = new Job()
+                Employer theEmployer = context.Employers.Find(addJobViewModel.EmployerId);
+                Job newJob = new Job
                 {
                   Name = addJobViewModel.JobName,
                   EmployerId = addJobViewModel.EmployerId

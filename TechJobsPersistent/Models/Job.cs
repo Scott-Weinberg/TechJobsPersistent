@@ -11,11 +11,7 @@ namespace TechJobsPersistent.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
-
-       /* public SelectListItem AllEmployers { get; set; }
-
-        public int AllEmployersID { get; set; }*/
-
+      
         public Employer Employer { get; set; }
         public int EmployerId { get; set; }
 

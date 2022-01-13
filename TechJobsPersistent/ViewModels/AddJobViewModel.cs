@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TechJobsPersistent.Models;
 
 namespace TechJobsPersistent.ViewModels
@@ -17,14 +18,15 @@ namespace TechJobsPersistent.ViewModels
         public string JobName { get; set; }
 
         public DbSet<Employer> Employers{ get; set; }
+        [NotMapped]
         public List<SelectListItem> AllEmployers { get; set; }
     
 
 
 
-        public AddJobViewModel( int employerId, List<Employer> employers)
+        public AddJobViewModel( List<Employer> employers)
         {
-            List<SelectListItem> AllEmployers  = new List<SelectListItem>();
+             AllEmployers  = new List<SelectListItem>();
 
             foreach (var employee in employers)
             {
@@ -35,7 +37,7 @@ namespace TechJobsPersistent.ViewModels
                 });
             }
 
-            EmployerId = employerId;
+           
         }
 
         public AddJobViewModel()
