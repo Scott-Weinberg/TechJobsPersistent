@@ -11,21 +11,32 @@ namespace TechJobsPersistent.ViewModels
     {
        
         public Employer Employer { get; set; }
+        [Required]
          public int EmployerId { get; set; }
-        public Job Job { get; set; }
-        public int JobId { get; set; }
-
+      
+       [Required]
         public string JobName { get; set; }
-
-        public DbSet<Employer> Employers{ get; set; }
-        [NotMapped]
-        public List<SelectListItem> AllEmployers { get; set; }
+        public List<Skill> SkillList { get; set; }
     
+        /*public List<int> SkillIds { get; set; }*/
 
+        public List<SelectListItem> AllEmployers { get; set; }
 
-
-        public AddJobViewModel( List<Employer> employers)
+        /*public AddJobViewModel(List<Skill> skillList)
         {
+            skillList = new List<Skill>();
+            foreach(var skill in skillList)
+            {
+                Name = skill.Name;
+                Description = skill.Description;
+             }
+        
+        }*/
+
+        public AddJobViewModel( List<Employer> employers, List<Skill> skillList)
+        {
+
+              SkillList= skillList;
              AllEmployers  = new List<SelectListItem>();
 
             foreach (var employee in employers)
@@ -37,8 +48,7 @@ namespace TechJobsPersistent.ViewModels
                 });
             }
 
-           
-        }
+          }
 
         public AddJobViewModel()
         {

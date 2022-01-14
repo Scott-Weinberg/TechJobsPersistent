@@ -34,31 +34,50 @@ namespace TechJobsPersistent.Controllers
         [HttpGet("/Add")]
         public IActionResult AddJob()
         {
-             List<Employer> employers = context.Employers.ToList();
-            AddJobViewModel addJobViewModel = new AddJobViewModel(employers);
-                     
+            List<Skill> skillList = context.Skills.ToList();
+            List<Employer> employers = context.Employers.ToList();
+            AddJobViewModel addJobViewModel = new AddJobViewModel(employers, skillList);
+            
             return View(addJobViewModel);
 
         }
-     
+
         [HttpPost]
-        public IActionResult ProcessAddJobForm(AddJobViewModel addJobViewModel)
+        public IActionResult ProcessAddJobForm(AddJobViewModel addJobViewModel, string[] selectedSkills)
         {
-           
+
             if (ModelState.IsValid)
             {
                 Employer theEmployer = context.Employers.Find(addJobViewModel.EmployerId);
                 Job newJob = new Job
                 {
-                  Name = addJobViewModel.JobName,
-                  EmployerId = addJobViewModel.EmployerId
-
+                    Name = addJobViewModel.JobName,
+                    EmployerId = addJobViewModel.EmployerId,
+                    Employer = theEmployer
+                   
                 };
+
+                
+                for (var i = 0; i < selectedSkills.Length; i++)
+                {
+                    int skillId = int.Parse(selectedSkills[i]);
+                    JobSkill newJobSkill = new JobSkill
+                    {
+                        Job = newJob,
+                        SkillId = skillId
+                    };
+                   
+                    context.JobSkills.Add(newJobSkill);
+                }
+                
+            
+       
+                
                 context.Jobs.Add(newJob);
                 context.SaveChanges();
-                return Redirect("/Employer/");
+                return Redirect("Index");
             }
-            return View(addJobViewModel);
+            return Redirect( "/Add");
 
         }
 

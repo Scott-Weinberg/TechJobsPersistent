@@ -10,7 +10,11 @@ namespace TechJobsPersistent.Models
         public Skill()
         {
         }
-
+        public Skill(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
         public Skill(string name, string description)
         {
             Name = name;
